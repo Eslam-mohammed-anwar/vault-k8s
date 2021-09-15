@@ -33,6 +33,12 @@ func (a *Agent) ContainerInitSidecar() (corev1.Container, error) {
 	}
 	volumeMounts = append(volumeMounts, a.ContainerVolumeMounts()...)
 
+        volumeMounts = append(volumeMounts, corev1.VolumeMount{
+                Name:      "config-volume",
+                MountPath: "/vault/test-configs",
+                ReadOnly:  true,
+        })
+
 	if a.ExtraSecret != "" {
 		volumeMounts = append(volumeMounts, corev1.VolumeMount{
 			Name:      extraSecretVolumeName,
